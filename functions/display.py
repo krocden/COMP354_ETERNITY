@@ -1,18 +1,23 @@
 from tkinter import *
 
 def updateInput(click):
+    #previousInput.set(input.get())
     input.set(input.get() + str(click))
 
-def clearEntry():
-    input.set('')
+def clearLastInput():
+    inputLength = len(input.get())
+    input.set(input.get()[0:inputLength-1])
+    #print('len' + str(inputLength))
+    #print(input.get()[0:inputLength-1])
 
 def clearInput():
-    previousInput.set('')
+    currentInputResult.set('')
+    #previousInput.set('')
     input.set('')
 
 def calculate():
-    global input
-    previousInput.set(input.get() + str('='))
+    global input, currentInputResult
+    currentInputResult.set(input.get() + str('='))
     input.set(eval(input.get()))
 
 def showFunctions(basicFrame, advFrame, basicButton, advButton, clicked):
@@ -43,12 +48,14 @@ def showFunctions(basicFrame, advFrame, basicButton, advButton, clicked):
             advButton.configure(bg='grey70')
 
 def configureWindow(window):
-    global input, previousInput
-    input = previousInput = StringVar()
+    global input, previousInput, currentInputResult
+    input = StringVar()
+    previousInput = StringVar()
+    currentInputResult = StringVar()
  
-    global previousInputField, inputField
-    previousResultField = Label(window, width=45, height=1, font='arial 12', bg='lightblue', textvariable=previousInput, anchor=E, justify=RIGHT)
-    previousResultField.pack(padx=5)
+    #global previousResultField, inputField
+    currentResultField = Label(window, width=45, height=1, font='arial 12', bg='lightblue', textvariable=currentInputResult, anchor=E, justify=RIGHT)
+    currentResultField.pack(padx=5)
     inputField = Label(window, width=15, height=1, font=('arial', 32, 'bold'), bg='lightblue', textvariable=input, anchor=E, justify=RIGHT)
     inputField.pack(padx=5)
 
@@ -61,30 +68,31 @@ def configureWindow(window):
     showBasicFrame = False
     showAdvFrame = False
     
+    sin = Button(basicFrame, text='sin', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=0, padx=(2,1), pady=(2,1))
+    cos = Button(basicFrame, text='cos', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=1, padx=(1), pady=(2,1))
+    tan = Button(basicFrame, text='tan', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=2, padx=(1,2), pady=(2,1))
+    sinh = Button(basicFrame, text='sinh', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=0, padx=(2,1), pady=(1))
+    cosh = Button(basicFrame, text='cosh', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=1, padx=1, pady=(1))
+    tanh = Button(basicFrame, text='tanh', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=2, padx=(1,2), pady=(1))
+    arcsin = Button(basicFrame, text='arcsin', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=2, column=0, padx=(2,1), pady=(1,2))
+    arccos = Button(basicFrame, text='arccos', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=2, column=1, padx=1, pady=(1,2))
+    arctan = Button(basicFrame, text='arctan', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=2, column=2, padx=(1,2), pady=(1,2))
 
-    sin = Button(basicFrame, text='sin', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=0, padx=(2,1), pady=(2,1))
-    cos = Button(basicFrame, text='cos', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=1, padx=(1), pady=(2,1))
-    tan = Button(basicFrame, text='tan', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=2, padx=(1,2), pady=(2,1))
-    sinh = Button(basicFrame, text='sinh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=0, padx=(2,1), pady=(1,2))
-    cosh = Button(basicFrame, text='cosh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=1, padx=1, pady=(1,2))
-    tanh = Button(basicFrame, text='tanh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=2, padx=(1,2), pady=(1,2))
-
-    placeholder1 = Button(advFrame, text='sin', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=0, padx=(2,1), pady=(2,1))
-    placeholder2 = Button(advFrame, text='cos', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=1, padx=(1), pady=(2,1))
-    placeholder3 = Button(advFrame, text='tan', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=2, padx=(1), pady=(1))
-    placeholder7 = Button(advFrame, text='tanh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=3, padx=(1,2), pady=(1,2))
-    placeholder4 = Button(advFrame, text='sinh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=0, padx=(2,1), pady=(1,2))
-    placeholder5 = Button(advFrame, text='cosh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=1, padx=1, pady=(1,2))
-    placeholder6 = Button(advFrame, text='tanh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=2, padx=(1,2), pady=(1,2))
-    placeholder8 = Button(advFrame, text='tanh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=2, padx=(1,2), pady=(1,2))
-    placeholder9 = Button(advFrame, text='tanh', width=5, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=2, padx=(1,2), pady=(1,2))
-
+    pi = Button(advFrame, text='π', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=0, padx=(2,1), pady=(2,1))
+    euler = Button(advFrame, text='e', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=1, padx=1, pady=(1,2))
+    logbx = Button(advFrame, text='logₘx', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=2, padx=(1), pady=(2,1))
+    gamma = Button(advFrame, text='Γ', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=0, column=3, padx=(1), pady=(1))
+    MAD = Button(advFrame, text='MAD', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=0, padx=(2,1), pady=(1,2))
+    stdev = Button(advFrame, text='σ', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=1, padx=(1), pady=(1,2))
+    placeholder7 = Button(advFrame, text='---', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=2, padx=(1), pady=(1,2))
+    placeholder8 = Button(advFrame, text='---', width=6, height=2, bd=0, bg='grey100', font='arial 12', command=lambda: clearInput()).grid(row=1, column=3, padx=(1), pady=(1,2))
+    
     basic = Button(buttonFrame, text='Basic \nFunctions', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: showFunctions(basicFrame, advFrame, basic, adv, 'basic'))
     basic.grid(row=0, column=0, padx=1, pady=1)
     adv = Button(buttonFrame, text='Advanced \nFunctions', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: showFunctions(basicFrame, advFrame, basic, adv, 'advanced'))
     adv.grid(row=0, column=1, padx=1, pady=1)
     clear = Button(buttonFrame, text='CE', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: clearInput()).grid(row=0, column=2, padx=1, pady=1)
-    clearEntry = Button(buttonFrame, text='←', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: clearInput()).grid(row=0, column=3, padx=1, pady=1)
+    backspace = Button(buttonFrame, text='←', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: clearLastInput()).grid(row=0, column=3, padx=1, pady=1)
     
     log = Button(buttonFrame, text='log', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput('log')).grid(row=1, column=0, padx=1, pady=1)
     sqrt = Button(buttonFrame, text='√', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput('sqrt')).grid(row=1, column=1, padx=1, pady=1)
@@ -95,12 +103,12 @@ def configureWindow(window):
     leftParenthesis = Button(buttonFrame, text ='(', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput('(')).grid(row=2, column=0, padx=1, pady=1)
     rightParenthesis = Button(buttonFrame, text =')', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput(')')).grid(row=2, column=1, padx=1, pady=1)
     placeholder = Button(buttonFrame, text ='xʸ', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput('')).grid(row=2, column=2, padx=1, pady=1)
-    divide = Button(buttonFrame, text ='/', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput('/')).grid(row=2, column=3, padx=1, pady=1)
+    divide = Button(buttonFrame, text ='÷', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput('/')).grid(row=2, column=3, padx=1, pady=1)
     
     num7 = Button(buttonFrame, text='7', width=10, height=3, bd=0, bg='grey100', font='arial 12', command=lambda: updateInput(7)).grid(row=3, column=0, padx=1, pady=1)
     num8 = Button(buttonFrame, text='8', width=10, height=3, bd=0, bg='grey100', font='arial 12', command=lambda: updateInput(8)).grid(row=3, column=1, padx=1, pady=1)
     num9 = Button(buttonFrame, text='9', width=10, height=3, bd=0, bg='grey100', font='arial 12', command=lambda: updateInput(9)).grid(row=3, column=2, padx=1, pady=1)
-    multiply = Button(buttonFrame, text='*', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput('*')).grid(row=3, column=3, padx=1, pady=1)
+    multiply = Button(buttonFrame, text='×', width=10, height=3, bd=0, bg='grey94', font='arial 12', command=lambda: updateInput('*')).grid(row=3, column=3, padx=1, pady=1)
     
     num4 = Button(buttonFrame, text='4', width=10, height=3, bd=0, bg='grey100', font='arial 12', command=lambda: updateInput(4)).grid(row=4, column=0, padx=1, pady=1)
     num5 = Button(buttonFrame, text='5', width=10, height=3, bd=0, bg='grey100', font='arial 12', command=lambda: updateInput(5)).grid(row=4, column=1, padx=1, pady=1)
