@@ -1,3 +1,4 @@
+ACCURACY = 0.0001
 
 def factorial(n):
     if n == 0:
@@ -41,23 +42,27 @@ def squareRoot(x):
         result = (result + x / result) / 2
     return result
 
+# Natural Log Taylor Series Expansion (for x > 0)
 def ln(x):
-    prev = 0
+    prevSum = 0
     denominator = 1
     y = (x - 1) / (x + 1)
-    y2 = y * y
+    yy = y*y
     sum = y
-    while sum != prev:
-        prev = sum
+    #while abs(sum - prevSum) <= ACCURACY:
+    while sum != prevSum:
+        prevSum = sum
         denominator += 2
-        y *= y2
+        y *= yy
         sum += y / denominator
     return 2 * sum
 
 def log(x):
     return ln(x) / ln(10)
 
-def logb(x, y):
+def logb(b, x):
+    return ln(x) / ln(b)
+    """
     numerator =0
     denominator =0
 
@@ -75,6 +80,13 @@ def logb(x, y):
 
     result= numerator -denominator*2
     return result
+    """
+
+def abs(x):
+    if x < 0:
+        return -x
+    else:
+        return x
 
 def btn_gamma():
     global expression
