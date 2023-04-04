@@ -6,7 +6,7 @@ PI = 3.1415926536
 EULER = 2.7182818284
 DEG = True
 
-def updateInput(click = ''):
+def updateInput(click):
     input.set(input.get() + str(click))
 
 def calculateFunction(result, function):
@@ -31,7 +31,10 @@ def calculate():
     parsedResult = parseExpression()
     if parsedResult != -1:
         currentInputResult.set(input.get() + str('='))
-        input.set(parsedResult)
+        if len(str(parsedResult)) > 8:
+            input.set(round(float(parsedResult), 8))
+        else:
+            input.set(str(parsedResult))
     else:
         currentInputResult.set(input.get() + str('='))
         input.set(eval(input.get()))
